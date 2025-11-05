@@ -1,0 +1,24 @@
+        /* Базовые стили */
+        body { font-family: sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        .task-item { border: 1px solid #ccc; margin-bottom: 15px; padding: 15px; border-radius: 5px; }
+        .task-item h3 { margin-top: 0; }
+        .task-item .tags span { background-color: #eee; padding: 3px 8px; border-radius: 3px; margin-right: 5px; font-size: 0.8em; }
+        .task-item button, #application-form button { background-color: royalblue; color: white; border: none; padding: 8px 15px; cursor: pointer; border-radius: 3px; }
+
+        /* Стили для Модального окна */
+        .modal {
+            display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.4);
+        }
+        .modal-content {
+            background-color: #fefefe; margin: 5% auto; padding: 20px; border: 1px solid #888; width: 80%; max-width: 600px; border-radius: 8px; position: relative;
+        }
+        .close-btn { color: #aaa; float: right; font-size: 28px; font-weight: bold; }
+        .close-btn:hover, .close-btn:focus { color: #000; text-decoration: none; cursor: pointer; }
+
+        /* Стили для формы */
+        #application-form label { display: block; margin-top: 10px; font-weight: bold; }
+        #application-form input[type="text"], #application-form input[type="date"], #application-form input[type="time"], #application-form textarea {
+            width: 100%; padding: 8px; margin-top: 5px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px;
+        }
+        .form-group { margin-bottom: 15px; }
+        #app-message { padding: 10px; margin-top: 10px; border-radius: 4px; }

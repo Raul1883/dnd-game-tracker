@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Админ панель | Мониторинг</title>
+    <link rel="stylesheet" href="/static/css/admin_style.css">
+
+</head>
+<body>
+<div class="navbar">
+    <div class="container">
+        <a href="/admin">📊 Мониторинг</a>
+        <a href="/admin/tasks">📜 Задания</a>
+        <a href="/admin/applications">📨 Заявки</a>
+        <a href="/admin/windows">🕒 Окна</a>
+    </div>
+</div>
+
+<div class="container">
+    <h1>Панель Мониторинга Мастера</h1>
+
+    <div id="admin-message" class="loading" style="display: block;">Загрузка данных...</div>
+
+    <div id="dashboard-content" style="display: none;">
+
+        <div class="metrics-grid">
+            <div class="card">
+                <h4>Всего активных заданий</h4>
+                <div class="value" id="total-tasks-count">0</div>
+            </div>
+
+            <div class="card">
+                <h4>Заявок по статусу</h4>
+                <div id="status-metrics">
+                </div>
+            </div>
+        </div>
+
+        <div class="metrics-grid" style="margin-top: 30px;">
+            <div class="card">
+                <h4>Топ-5 популярных заданий</h4>
+                <div id="top-tasks-list"></div>
+            </div>
+            <div class="card">
+                <h4>Топ-5 популярных дат</h4>
+                <div id="top-dates-list"></div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="/static/scripts/dashboard.js"></script>
+
+
+</body>
+</html>

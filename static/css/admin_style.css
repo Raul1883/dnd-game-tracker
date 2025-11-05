@@ -1,0 +1,296 @@
+/* ============================== */
+/* 1. BASE & LAYOUT STYLES        */
+/* ============================== */
+
+body {
+    font-family: sans-serif;
+    margin: 0;
+    background-color: #f4f7f6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+/* Общие стили для контейнеров: Карточки, Формы, Таблицы */
+.card,
+#create-form-container,
+.table-container {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    padding: 20px;
+}
+
+/* ============================== */
+/* 2. NAVIGATION                  */
+/* ============================== */
+
+.navbar {
+    background-color: #333;
+    color: white;
+    padding: 15px 0;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    padding: 15px 20px;
+    display: inline-block;
+}
+
+.navbar a:hover {
+    background-color: #575757;
+}
+
+/* ============================== */
+/* 3. CARDS & METRICS (Мониторинг)*/
+/* ============================== */
+
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.card h4 {
+    margin-top: 0;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+    color: #333;
+}
+
+.card .value {
+    font-size: 2.5em;
+    font-weight: bold;
+    color: royalblue;
+}
+
+/* ============================== */
+/* 4. FORMS & INPUTS              */
+/* ============================== */
+
+#create-form-container {
+    margin-bottom: 30px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+/* Базовый стиль для всех полей ввода */
+input[type="text"],
+textarea,
+input[type="date"],
+input[type="time"] {
+    padding: 8px;
+    margin-top: 5px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Специфика для форм */
+#create-task-form input[type="text"],
+#create-task-form textarea {
+     width: 100%;
+}
+
+#create-window-form input[type="date"],
+#create-window-form input[type="time"] {
+    width: calc(50% - 10px);
+    display: inline-block;
+}
+
+#create-window-form input[type="date"] {
+    margin-right: 10px;
+}
+
+/* ============================== */
+/* 5. BUTTONS                     */
+/* ============================== */
+
+/* Базовый стиль для всех кнопок */
+button {
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 3px;
+    margin-top: 15px;
+}
+
+/* Кнопки формы: Синяя (Окна), Зеленая (Задания) */
+#create-window-form button {
+    background-color: #007bff;
+    color: white;
+}
+#create-task-form button {
+    background-color: #28a745;
+    color: white;
+}
+
+/* Кнопки действия (Удалить/Сохранить) */
+.save-status-btn,
+.task-list-item .actions button,
+.windows-list-item .actions button {
+    color: white;
+    background-color: #dc3545; /* Красный по умолчанию для действий */
+    padding: 5px 10px;
+    font-size: 0.9em;
+    margin-top: 0;
+}
+
+/* Отдельный стиль для кнопки сохранения статуса (Синий) */
+.save-status-btn {
+    background-color: #007bff;
+    border-radius: 4px;
+    font-size: 0.8em;
+}
+
+.save-status-btn:disabled {
+    background-color: #999;
+    cursor: not-allowed;
+}
+
+/* ============================== */
+/* 6. TABLES (Заявки)             */
+/* ============================== */
+
+.table-container {
+    overflow-x: auto;
+    padding: 10px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+    font-size: 0.9em;
+}
+
+th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+tr:hover {
+    background-color: #f5f5f5;
+}
+
+/* Селектор статуса */
+.status-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.status-select {
+    padding: 5px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    font-weight: bold;
+    flex-grow: 1;
+}
+
+.status-select.default { background-color: #fff3cd; color: #856404; } /* Желтый */
+.status-select.confirmed { background-color: #d4edda; color: #155724; } /* Зеленый */
+.status-select.outdated { background-color: #f8d7da; color: #721c24; } /* Красный */
+
+/* ============================== */
+/* 7. LISTS (Задания, Окна, Мониторинг) */
+/* ============================== */
+
+/* Общий стиль для простых списков на мониторинге */
+.list-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px dotted #ccc;
+}
+.list-item:last-child {
+    border-bottom: none;
+}
+
+/* Карточки Заданий/Окон */
+.task-list-item,
+.windows-list-item {
+    background-color: white;
+    padding: 15px;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    margin-bottom: 15px;
+}
+
+/* Специфика Заданий */
+.task-list-item h4 {
+    margin-top: 0;
+    color: #007bff;
+}
+.task-list-item p {
+    margin: 5px 0;
+}
+.task-list-item .actions {
+    text-align: right;
+}
+
+/* Специфика Окон */
+.windows-list-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.windows-list-item h4 {
+    margin: 0;
+    color: #007bff;
+}
+.windows-list-item .details {
+    flex-grow: 1;
+}
+
+/* ============================== */
+/* 8. MESSAGES & STATUS           */
+/* ============================== */
+
+/* Общее для всех сообщений (успех, ошибка, загрузка) */
+.message,
+#admin-message {
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+    display: none;
+}
+
+.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.error,
+#admin-message.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.loading,
+#admin-message.loading {
+    background-color: #e2e3e5;
+    color: #383d41;
+}

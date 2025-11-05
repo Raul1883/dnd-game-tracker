@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Админ панель | Заявки</title>
+    <link rel="stylesheet" href="/static/css/admin_style.css">
+
+
+</head>
+<body>
+<div class="navbar">
+    <div class="container">
+        <a href="/admin">📊 Мониторинг</a>
+        <a href="/admin/tasks">📜 Задания</a>
+        <a href="/admin/applications">📨 Заявки</a>
+        <a href="/admin/windows">🕒 Окна</a>
+    </div>
+</div>
+
+<div class="container">
+    <h1>📨 Управление Заявками</h1>
+    <p>Список всех заявок, отсортированных по дате игры. Нажмите "Сохранить" для применения нового статуса.</p>
+
+    <div id="main-message" class="message loading" style="display: block;">Загрузка списка заявок...</div>
+
+    <div class="table-container">
+        <table id="applications-table">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Статус</th>
+                <th>Задание ID</th>
+                <th>Никнейм</th>
+                <th>Дата игры</th>
+                <th>Начало</th>
+                <th>Конец</th>
+                <th>Комментарий</th>
+                <th>Дата подачи</th>
+            </tr>
+            </thead>
+            <tbody id="applications-table-body">
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script src="/static/scripts/applications.js"></script>
+</body>
+</html>

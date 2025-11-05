@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Админ панель | Окна</title>
+    <link rel="stylesheet" href="/static/css/admin_style.css">
+
+
+</head>
+<body>
+    <div class="navbar">
+        <div class="container">
+            <a href="/admin">📊 Мониторинг</a>
+            <a href="/admin/tasks">📜 Задания</a>
+            <a href="/admin/applications">📨 Заявки</a>
+            <a href="/admin/windows">🕒 Окна</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <h1>🕒 Управление Временными Окнами</h1>
+
+        <div id="create-form-container">
+            <h3>Создать новое окно</h3>
+            <div id="create-message" class="message"></div>
+            <form id="create-window-form">
+                <div class="form-group">
+                    <label for="game_date">Дата *</label>
+                    <input type="date" id="game_date" name="game_date" required>
+                </div>
+                <div class="form-group">
+                    <label for="time_start">Время начала *</label>
+                    <input type="time" id="time_start" name="time_start" required step="60">
+                </div>
+                <div class="form-group">
+                    <label for="time_end">Время конца *</label>
+                    <input type="time" id="time_end" name="time_end" required step="60">
+                </div>
+                <button type="submit" id="create-btn">Создать окно</button>
+            </form>
+        </div>
+
+        <h2>Активные временные окна</h2>
+        <div id="list-message" class="message loading" style="display: block;">Загрузка списка окон...</div>
+        <div id="windows-list-container">
+            </div>
+    </div>
+
+    <script src="/static/scripts/windows.js"></script>
+
+
+</body>
+</html>

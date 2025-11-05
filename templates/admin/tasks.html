@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Админ панель | Задания</title>
+    <link rel="stylesheet" href="/static/css/admin_style.css">
+
+</head>
+<body>
+<div class="navbar">
+    <div class="container">
+        <a href="/admin">📊 Мониторинг</a>
+        <a href="/admin/tasks">📜 Задания</a>
+        <a href="/admin/applications">📨 Заявки</a>
+        <a href="/admin/windows">🕒 Окна</a>
+    </div>
+</div>
+
+<div class="container">
+    <h1>📜 Управление Заданиями</h1>
+
+    <div id="create-form-container">
+        <h3>Создать новое задание</h3>
+        <div id="create-message" class="message"></div>
+        <form id="create-task-form">
+            <div class="form-group">
+                <label for="name">Название задания *</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="short_description">Краткое описание *</label>
+                <input type="text" id="short_description" name="short_description" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Полное описание *</label>
+                <textarea id="description" name="description" rows="5" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="min_lvl">Мин. уровень (число)</label>
+                <input type="text" id="min_lvl" name="min_lvl">
+            </div>
+            <div class="form-group">
+                <label for="max_lvl">Макс. уровень (число)</label>
+                <input type="text" id="max_lvl" name="max_lvl">
+            </div>
+            <div class="form-group">
+                <label for="tags">Тэги (через запятую, например: Боевое, Исследование)</label>
+                <input type="text" id="tags" name="tags">
+            </div>
+            <button type="submit" id="create-btn">Создать задание</button>
+        </form>
+    </div>
+
+    <h2>Активные задания</h2>
+    <div id="list-message" class="message loading" style="display: block;">Загрузка списка заданий...</div>
+    <div id="tasks-list-container">
+    </div>
+</div>
+
+<script src="/static/scripts/tasks.js"></script>
+</body>
+</html>
