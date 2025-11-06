@@ -10,96 +10,113 @@
 
 <div class="container">
 
-        <header class="hero">
+    <header class="hero">
+
+
+        <img src="/static/img/main_page_hero.png">
+
+        <div class="container">
             <h1>Приключение начинается сегодня!</h1>
             <p class="lead">Система записи на НРИ для сообществ в стиле West March.</p>
 
-            <div class="main-image-placeholder">
-
-            </div>
-
             <a href="#tasks-list" class="cta-button">Посмотреть доступные задания</a>
-        </header>
+        </div>
+    </header>
 
-        <section class="description-section">
-            <div class="description-content">
-                <h2>О проекте</h2>
-                <p>Этот сайт создан, чтобы упростить организацию и участие в больших кампаниях настольных ролевых игр (НРИ), работающих по принципам West March. Это формат, где множество игроков взаимодействуют с общим, постоянно развивающимся миром, а мастера проводят игры, когда набирается достаточное количество желающих.</p>
+    <section class="description-section">
+        <div class="description-content">
+            <h2>О проекте</h2>
+            <p>Этот сайт создан, чтобы упростить организацию и участие в больших кампаниях настольных ролевых игр (НРИ),
+                работающих по принципам West March. Это формат, где множество игроков взаимодействуют с общим, постоянно
+                развивающимся миром, а мастера проводят игры, когда набирается достаточное количество желающих.</p>
 
-                <h3>Основной функционал для игроков:</h3>
-                <ul>
-                    <li>Просмотр Заданий: Быстрый доступ к списку текущих миссий, их описанию и потенциальным наградам.</li>
-                    <li>Простая Запись: Возможность записаться на любое задание, указав желаемую дату и диапазон времени, когда вы свободны.</li>
-                    <li>Гибкое Время: Вы указываете время начала, а время конца автоматически выставляется на +5 часов, с возможностью ручной корректировки.</li>
-                    <li>Комментарии: Добавление информации о выбранном персонаже или любых пожеланиях к игре.</li>
-                </ul>
-            </div>
-        </section>
+            <h3>Основной функционал для игроков:</h3>
+            <ul>
+                <li>Просмотр Заданий: Быстрый доступ к списку текущих миссий, их описанию и потенциальным наградам.</li>
+                <li>Простая Запись: Возможность записаться на любое задание, указав желаемую дату и диапазон времени,
+                    когда вы свободны.
+                </li>
+                <li>Гибкое Время: Вы указываете время начала, а время конца автоматически выставляется на +5 часов, с
+                    возможностью ручной корректировки.
+                </li>
+                <li>Комментарии: Добавление информации о выбранном персонаже или любых пожеланиях к игре.</li>
+            </ul>
+        </div>
+    </section>
 
-<section id="tasks-list">
-    <h1>Список доступных заданий</h1>
+    <section id="tasks-list">
+        <h1>Список доступных заданий</h1>
 
-    <div id="loading-message">Загрузка заданий...</div>
-    <div id="error-message" style="color: red; display: none;">Ошибка при загрузке заданий. Пожалуйста, попробуйте
-        позже.
-    </div>
+        <div id="loading-message">Загрузка заданий...</div>
+        <div id="error-message" style="color: red; display: none;">Ошибка при загрузке заданий. Пожалуйста, попробуйте
+            позже.
+        </div>
 
-    <div id="tasks-container">
-    </div>
+        <div id="tasks-container">
+        </div>
 
-    <div id="task-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn">&times;</span>
-            <div id="modal-content-details">
-                <h2>Детали задания</h2>
-                <div id="task-details-display">
-                    <div id="modal-loading" style="text-align: center; padding: 20px;">Загрузка деталей...</div>
-                    <div id="task-details">
+        <div id="task-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-btn">&times;</span>
+                <div id="modal-content-details">
+                    <h2>Детали задания</h2>
+                    <div id="task-details-display">
+                        <div id="modal-loading" style="text-align: center; padding: 20px;">Загрузка деталей...</div>
+                        <div id="task-details">
+                        </div>
                     </div>
+
+                    <hr>
+
+                    <h3>Подать заявку на участие</h3>
+
+                    <div id="app-message" style="display: none;"></div>
+
+                    <form id="application-form" data-task-id="">
+                        <input type="hidden" id="form-task-id" name="task_id" value="">
+
+                        <div class="form-group">
+                            <label for="name">Ваш никнейм *</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="game_date">Желаемая дата игры * (ГГГГ-ММ-ДД)</label>
+                            <input type="date" id="game_date" name="game_date" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="time_start">Время начала (с которого вы свободны) *</label>
+                            <input type="time" id="time_start" name="time_start" required step="60">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="time_end">Время конца </label>
+                            <input type="time" id="time_end" name="time_end" step="60">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="info">Комментарий (например, выбранный персонаж)</label>
+                            <textarea id="info" name="info" rows="3"></textarea>
+                        </div>
+
+                        <button type="submit" id="submit-app-btn">Отправить заявку</button>
+                        <p style="font-size: 0.8em; margin-top: 10px;">* - Обязательные поля</p>
+                    </form>
                 </div>
-
-                <hr>
-
-                <h3>Подать заявку на участие</h3>
-
-                <div id="app-message" style="display: none;"></div>
-
-                <form id="application-form" data-task-id="">
-                    <input type="hidden" id="form-task-id" name="task_id" value="">
-
-                    <div class="form-group">
-                        <label for="name">Ваш никнейм *</label>
-                        <input type="text" id="name" name="name" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="game_date">Желаемая дата игры * (ГГГГ-ММ-ДД)</label>
-                        <input type="date" id="game_date" name="game_date" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="time_start">Время начала (с которого вы свободны) *</label>
-                        <input type="time" id="time_start" name="time_start" required step="60">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="time_end">Время конца </label>
-                        <input type="time" id="time_end" name="time_end" step="60">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="info">Комментарий (например, выбранный персонаж)</label>
-                        <textarea id="info" name="info" rows="3"></textarea>
-                    </div>
-
-                    <button type="submit" id="submit-app-btn">Отправить заявку</button>
-                    <p style="font-size: 0.8em; margin-top: 10px;">* - Обязательные поля</p>
-                </form>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<script src="/static/scripts/index.js"></script>
+    <footer>
+        <div class="footer-info">
+            <ul>
+                <li class="footer-info-e">Версия сайта 1.0</li>
+                <li class="footer-info-e"><a href="https://github.com/Raul1883/dnd-game-tracker" class="footer-info-e">сурсы проекта</a></li>
+            </ul>
+        </div>
+    </footer>
+
+    <script src="/static/scripts/index.js"></script>
 </body>
 </html>

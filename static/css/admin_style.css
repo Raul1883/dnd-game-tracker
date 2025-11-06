@@ -140,6 +140,7 @@ button {
 
 /* Кнопки действия (Удалить/Сохранить) */
 .save-status-btn,
+.delete-app-btn,
 .task-list-item .actions button,
 .windows-list-item .actions button {
     color: white;

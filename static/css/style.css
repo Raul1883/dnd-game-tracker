@@ -1,24 +1,455 @@
-        /* Базовые стили */
-        body { font-family: sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
-        .task-item { border: 1px solid #ccc; margin-bottom: 15px; padding: 15px; border-radius: 5px; }
-        .task-item h3 { margin-top: 0; }
-        .task-item .tags span { background-color: #eee; padding: 3px 8px; border-radius: 3px; margin-right: 5px; font-size: 0.8em; }
-        .task-item button, #application-form button { background-color: royalblue; color: white; border: none; padding: 8px 15px; cursor: pointer; border-radius: 3px; }
+/* ============================== */
+/* BASE & LAYOUT                  */
+/* ============================== */
 
-        /* Стили для Модального окна */
-        .modal {
-            display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.4);
-        }
-        .modal-content {
-            background-color: #fefefe; margin: 5% auto; padding: 20px; border: 1px solid #888; width: 80%; max-width: 600px; border-radius: 8px; position: relative;
-        }
-        .close-btn { color: #aaa; float: right; font-size: 28px; font-weight: bold; }
-        .close-btn:hover, .close-btn:focus { color: #000; text-decoration: none; cursor: pointer; }
+:root {
+    /* Палитра: Спокойный Синий, Лесной Зеленый, Мягкий Фон */
+    --color-primary: #347C98;     /* Глубокий синий (для кнопок, заголовков) */
+    --color-secondary: #4A9C78;   /* Спокойный зеленый (для тегов, преимуществ) */
+    --color-background: #F4F7F6;  /* Светло-серый фон */
+    --color-text-dark: #333333;   /* Темный текст */
+    --color-text-light: #ffffff;  /* Светлый текст */
+    --color-accent-light: #e0f2f1; /* Очень светлый акцент */
+    --color-border: #cccccc;
+}
 
-        /* Стили для формы */
-        #application-form label { display: block; margin-top: 10px; font-weight: bold; }
-        #application-form input[type="text"], #application-form input[type="date"], #application-form input[type="time"], #application-form textarea {
-            width: 100%; padding: 8px; margin-top: 5px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px;
-        }
-        .form-group { margin-bottom: 15px; }
-        #app-message { padding: 10px; margin-top: 10px; border-radius: 4px; }
+body {
+    font-family: 'Georgia', serif; /* Более классический шрифт */
+    margin: 0;
+    background-color: var(--color-background);
+    color: var(--color-text-dark);
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+h1, h2, h3 {
+    font-family: 'Helvetica Neue', sans-serif; /* Контраст для заголовков */
+    color: var(--color-primary);
+    line-height: 1.2;
+}
+
+p, ul {
+    margin-bottom: 1em;
+}
+
+/* ============================== */
+/* NAVIGATION                     */
+/* ============================== */
+
+.navbar {
+    background-color: var(--color-primary);
+    padding: 10px 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.navbar a {
+    color: var(--color-text-light);
+    text-decoration: none;
+    padding: 10px 15px;
+    display: inline-block;
+    transition: background-color 0.3s;
+}
+
+.navbar a:hover {
+    background-color: #2a647d; /* Чуть темнее синий */
+}
+
+/* ============================== */
+/* HERO SECTION                   */
+/* ============================== */
+
+.hero {
+    /* 1. Делаем контейнер Hero полным по ширине и задаем высоту */
+    width: 100%;
+    height: 550px; /* Фиксированная высота для Hero-секции */
+    margin-bottom: 40px;
+    position: relative; /* Важно: для позиционирования изображения и текста внутри */
+    overflow: hidden;
+
+    /* 2. Центрирование текста по вертикали и горизонтали */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    /* Сбрасываем центрирование контейнера, чтобы .hero растянулся на всю ширину */
+    padding: 0;
+}
+
+/* Контейнер для центрирования содержимого внутри hero */
+.hero > .container {
+    position: relative; /* Поверх оверлея */
+    z-index: 20;
+    text-align: center;
+    padding: 20px;
+    max-width: 900px;
+}
+
+/* 3. Оверлей (затемнение) для лучшей читаемости текста */
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    /* Мягкий градиент для затемнения */
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 10;
+}
+
+/* 4. Стили для ИЗОБРАЖЕНИЯ (вложенный img, не .main-image-placeholder) */
+.hero img {
+    position: absolute; /* Убираем из потока */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Растягивает и обрезает, сохраняя пропорции */
+    object-position: center; /* Центрируем фокус изображения */
+    z-index: 5; /* Ниже оверлея и текста */
+}
+
+/* Стили для текста поверх изображения */
+.hero h1 {
+    font-size: 4.5em;
+    color: var(--color-text-light); /* Светлый текст на темном фоне */
+    margin-bottom: 15px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8); /* Четкая тень */
+}
+
+.hero .lead {
+    font-size: 1.6em;
+    color: #f0f0f0;
+    margin-bottom: 30px;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+}
+.main-image-placeholder {
+    max-width: 100%;
+    /* Фиксируем высоту контейнера, чтобы избежать его растяжения большим изображением */
+    height: 350px;
+    background-color: #8caba5;
+    margin: 25px auto;
+    border-radius: 8px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    overflow: hidden; /* Важно: обрезает части изображения, которые выходят за пределы height: 350px */
+    display: block;
+}
+
+.main-image-placeholder img {
+    width: 100%;
+    height: 100%;
+
+    /* Самые важные правила для масштабирования: */
+    object-fit: cover;
+
+    /* Определяет, откуда начинается обрезка/масштабирование.
+       object-position: top; гарантирует, что верхняя часть изображения (например, небо или заголовок)
+       будет видна в первую очередь. Если нужно фокусироваться на нижней части (земля, персонажи),
+       можно использовать object-position: bottom;
+       По умолчанию используем top, чтобы обеспечить видимость "главного" содержимого в верхней части */
+    object-position: top;
+}
+
+
+/* CTA Button */
+.cta-button {
+    display: inline-block;
+    background-color: var(--color-primary);
+    color: var(--color-text-light);
+    padding: 12px 25px;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 1.1em;
+    font-weight: bold;
+    margin-top: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s, transform 0.1s;
+    border: 1px solid #1a5e78;
+}
+
+.cta-button:hover {
+    background-color: #2a647d;
+    transform: translateY(-1px);
+}
+
+/* ============================== */
+/* DESCRIPTION & ADVANTAGES       */
+/* ============================== */
+
+.description-section {
+    display: flex;
+    gap: 40px;
+    margin-bottom: 50px;
+}
+
+.description-content, .advantages {
+    background-color: white;
+    padding: 25px;
+    border-radius: 6px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+.description-content {
+    flex: 2; /* Описание занимает больше места */
+}
+
+.advantages {
+    flex: 1; /* Преимущества меньшая колонка */
+}
+
+.advantages ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.advantages li {
+    background: var(--color-secondary); /* Зеленый фон для преимуществ */
+    color: var(--color-text-light);
+    padding: 12px 15px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    border-left: 5px solid #287a55; /* Более темная полоса */
+}
+.advantages li::before {
+    content: "⭐";
+    margin-right: 8px;
+}
+
+/* ============================== */
+/* TASKS LIST (LIST)              */
+/* ============================== */
+
+#tasks-list h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    border-bottom: 2px solid var(--color-primary);
+    padding-bottom: 10px;
+}
+
+#tasks-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+    margin-top: 20px;
+}
+
+.task-item {
+    background-color: white;
+    padding: 20px;
+    border-radius: 6px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-top: 4px solid var(--color-primary); /* Акцентная полоса */
+    transition: transform 0.2s;
+}
+
+.task-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+.task-item h3 {
+    margin-top: 0;
+    font-size: 1.4em;
+    color: var(--color-primary);
+}
+
+.task-item p {
+    font-size: 0.95em;
+    margin: 8px 0;
+}
+
+/* Теги */
+.task-item .tags {
+    display: inline-flex;
+    gap: 5px;
+    margin-top: 5px;
+}
+.task-item .tags span {
+    background-color: var(--color-accent-light);
+    color: var(--color-secondary);
+    padding: 3px 8px;
+    border-radius: 3px;
+    font-size: 0.8em;
+    border: 1px solid #c8e6c9;
+}
+
+.details-btn {
+    display: block;
+    width: 100%;
+    background-color: var(--color-secondary);
+    color: var(--color-text-light);
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    margin-top: 15px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s;
+}
+
+.details-btn:hover {
+    background-color: #287a55;
+}
+
+/* Сообщения */
+#loading-message, #error-message {
+    text-align: center;
+    padding: 15px;
+    border-radius: 4px;
+    margin: 20px auto;
+}
+#loading-message { background-color: #f0f8ff; color: #1e88e5; }
+#error-message { background-color: #fbecec; border: 1px solid red; }
+
+/* ============================== */
+/* MODAL STYLES                   */
+/* ============================== */
+
+/* Базовые цвета из style.css */
+:root {
+    --color-primary: #347C98;
+    --color-secondary: #4A9C78;
+    --color-text-dark: #333333;
+}
+
+/* Фон модального окна */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.6); /* Темный полупрозрачный фон */
+}
+
+/* Контент модального окна */
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto; /* Центрирование */
+    padding: 30px;
+    border: 1px solid #888;
+    width: 90%;
+    max-width: 700px;
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* Кнопка закрытия */
+.close-btn {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+    color: var(--color-primary);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Разделитель */
+.modal-content hr {
+    border: 0;
+    height: 1px;
+    background: #ccc;
+    margin: 20px 0;
+}
+
+/* Детали задания */
+#task-details h3, #task-details p {
+    margin: 10px 0;
+}
+#task-details strong {
+    color: var(--color-primary);
+}
+
+/* Стили для формы (аналогично админке, но с акцентом) */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: var(--color-text-dark);
+}
+
+#application-form input[type="text"],
+#application-form input[type="date"],
+#application-form input[type="time"],
+#application-form textarea {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+}
+
+#application-form textarea {
+    resize: vertical;
+}
+
+/* Кнопка отправки формы */
+#submit-app-btn {
+    background-color: var(--color-secondary);
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1.1em;
+    margin-top: 10px;
+    transition: background-color 0.3s;
+}
+
+#submit-app-btn:hover {
+    background-color: #287a55;
+}
+
+/* Сообщения в форме */
+#app-message {
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+    display: none;
+    font-weight: bold;
+}
+
+#app-message.success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+#app-message.error {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+footer {
+    margin-top: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+
+
+
+
+.footer-info-e {
+    color: #347C98;
+    decoration: none;
+    list-style: none;
+}
