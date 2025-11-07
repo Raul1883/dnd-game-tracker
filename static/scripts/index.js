@@ -111,10 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 },
 
-                // Открываем календарь сразу после инициализации
-                onReady: function(selectedDates, dateStr, instance){
-                    instance.open();
-                }
+
             });
 
             dateInput.placeholder = 'Нажмите, чтобы выбрать дату *';
