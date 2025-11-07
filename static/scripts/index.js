@@ -30,6 +30,25 @@ document.addEventListener('DOMContentLoaded', () => {
                 appMessage.style.display = 'none';
             };
 
+            const formatLvl = (task) =>{
+                        const minLvl = task.min_lvl;
+                        const maxLvl = task.max_lvl;
+                        let levelHtml = '';
+
+                        if (minLvl !== null && maxLvl !== null) {
+                            return `${minLvl} - ${maxLvl}`;
+                        }
+                        else if (minLvl !== null) {
+                            return `от ${minLvl}`;
+                        }
+                        else if (maxLvl !== null) {
+                            return `до ${maxLvl}`;
+                        }
+                        else {
+                            return 'Не указан'; // Или можно оставить пустую строку, если не нужно ничего выводить
+                        }
+            }
+
 
             // Функция для открытия модального окна и загрузки деталей
             const showTaskDetails = (taskId) => {
@@ -46,11 +65,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
                         const tagsHtml = task.tags.map(tag => `<span>${tag}</span>`).join(' ');
 
+                        let levelHtml = formatLvl(task);
+
+
                         taskDetails.innerHTML = `
-                            <p><strong>Задание ID:</strong> ${task.id}</p>
                             <h3>${task.name}</h3>
                             <p><strong>Описание:</strong> ${task.description}</p>
-                            <p><strong>Уровень:</strong> ${task.min_lvl} - ${task.max_lvl}</p>
+                            <p><strong>Уровень:</strong> ${levelHtml}</p>
                             <p><strong>Тэги:</strong> <span class="tags">${tagsHtml}</span></p>
                         `;
                     })
@@ -150,9 +171,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
                             const tagsHtml = task.tags.map(tag => `<span>${tag}</span>`).join(' ');
 
+                            let levelHtml = formatLvl(task);
+
                             taskDiv.innerHTML = `
                                 <h3>${task.name}</h3>
-                                <p><strong>Уровень:</strong> ${task.min_lvl} - ${task.max_lvl}</p>
+                                <p><strong>Уровень:</strong> ${levelHtml}</p>
                                 <p>${task.short_description}</p>
                                 <p>
                                     <strong>Тэги:</strong> <span class="tags">${tagsHtml}</span>
