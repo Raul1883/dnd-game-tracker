@@ -5,6 +5,11 @@
             const listMessage = document.getElementById('list-message');
             const tasksListContainer = document.getElementById('tasks-list-container');
 
+            // --- Новые элементы для импорта JSON ---
+            const importForm = document.getElementById('import-task-form'); // <--- ДОБАВИТЬ
+            const importMessage = document.getElementById('import-message'); // <--- ДОБАВИТЬ
+            const importBtn = document.getElementById('import-btn'); // <--- ДОБАВИТЬ
+
             // --- УТИЛИТЫ ---
             const ADMIN_KEY = ''; // Здесь бы передавался реальный ключ в продакшене
 
@@ -159,6 +164,65 @@
                     deleteBtn.textContent = 'Удалить';
                 }
             };
+
+            // 4. ИМПОРТ ОДНОГО ЗАДАНИЯ (POST /api/admin/tasks)
+            importForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                hideMessage(importMessage);
+                importBtn.disabled = true;
+                importBtn.textContent = 'Импорт...';
+
+                const jsonDataTextarea = document.getElementById('json_data');
+                const jsonString = jsonDataTextarea.value.trim();
+
+                if (!jsonString) {
+                    showMessage(importMessage, '❌ Пожалуйста, вставьте JSON данные.', 'error');
+                    importBtn.disabled = false;
+                    importBtn.textContent = 'Импортировать JSON';
+                    return;
+                }
+
+                let taskData;
+                try {
+                    // Попытка парсинга строки в JS объект
+                    taskData = JSON.parse(jsonString);
+                } catch (error) {
+                    console.error('Ошибка парсинга JSON:', error);
+                    showMessage(importMessage, `❌ Ошибка парсинга JSON: Неверный формат. ${error.message}`, 'error');
+                    importBtn.disabled = false;
+                    importBtn.textContent = 'Импортировать JSON';
+                    return;
+                }
+
+                // *** КОРРЕКТИРОВКА: Проверка на то, что это именно объект, а не массив ***
+                if (Array.isArray(taskData) || typeof taskData !== 'object' || taskData === null) {
+                    showMessage(importMessage, '❌ Ошибка: Ожидается JSON-объект одного задания, а не массив.', 'error');
+                    importBtn.disabled = false;
+                    importBtn.textContent = 'Импортировать JSON';
+                    return;
+                }
+                // ************************************************************************
+
+                try {
+                    // Отправка распарсенного объекта
+                    const newTask = await apiCall('/api/admin/tasks', 'POST', taskData);
+
+                    // Ожидаем один объект задания в ответ
+                    const name = newTask.name || 'Название не указано';
+                    const id = newTask.id || 'ID не указан';
+
+                    showMessage(importMessage, `✅ Задание "${name}" успешно импортировано (ID: ${id})!`, 'success');
+                    importForm.reset(); // Очистка формы
+                    loadTasks(); // Обновление списка
+
+                } catch (error) {
+                    console.error('Ошибка импорта задания:', error);
+                    showMessage(importMessage, `❌ Ошибка импорта: ${error.message}`, 'error');
+                } finally {
+                    importBtn.disabled = false;
+                    importBtn.textContent = 'Импортировать JSON';
+                }
+            });
 
             // Запуск загрузки при старте
             loadTasks();

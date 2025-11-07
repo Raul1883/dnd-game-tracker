@@ -52,6 +52,18 @@
         </form>
     </div>
 
+    <div id="import-tasks-container">
+        <h3>Импорт заданий (JSON)</h3>
+        <div id="import-message" class="message"></div>
+        <form id="import-task-form">
+            <div class="form-group">
+                <label for="json_data">JSON данные заданий (объект или массив)</label>
+                <textarea id="json_data" name="json_data" rows="10" required placeholder='Ожидается ОДИН JSON-объект задания, например: {"name": "Test Task", "short_description": "short", "description": "long", "min_lvl": 1, "max_lvl": 5, "tags": ["tag1", "tag2"]}'></textarea>
+            </div>
+            <button type="submit" id="import-btn">Импортировать JSON</button>
+        </form>
+    </div>
+
     <h2>Активные задания</h2>
     <div id="list-message" class="message loading" style="display: block;">Загрузка списка заданий...</div>
     <div id="tasks-list-container">
