@@ -200,6 +200,45 @@ def list_applications():
     return jsonify(applications_json), 200
 
 
+## 4.1 GET /api/admin/applications/dates: Получить все даты не устаревших заявок
+@admin_bp.route('/applications/dates', methods=['GET'])
+@master_required
+def list_application_dates():
+    """
+    Получает массив уникальных дат (YYYY-MM-DD) из заявок, которые не имеют статус 'outdated'.
+    Используется для подсветки занятых дней в календаре.
+    """
+    try:
+        # 1. Создание запроса:
+        # - Выбрать только уникальные значения game_date (db.distinct(Application.game_date))
+        # - Отфильтровать заявки, исключая те, что имеют статус 'outdated'.
+        #   (ПРЕДПОЛОЖЕНИЕ: в модели Application есть поле 'status'. Если используется булево поле,
+        #   например 'is_outdated', используйте Application.is_outdated.is_(False))
+        # - Сортировка по дате для удобства (не обязательно)
+        q = db.select(
+            db.distinct(Application.game_date)
+        ).filter(
+            Application.status != 'outdated'
+        ).order_by(Application.game_date)
+
+        # 2. Выполнение запроса и получение списка объектов datetime.date
+        unique_dates = db.session.execute(q).scalars().all()
+
+        # 3. Форматирование результатов в требуемый JSON-формат: [{"date": "YYYY-MM-DD"}]
+        dates_json = [
+            # Форматируем объект date в строку "YYYY-MM-DD"
+            {"date": date.strftime('%Y-%m-%d')}
+            for date in unique_dates
+        ]
+
+        return jsonify(dates_json), 200
+
+    except Exception as e:
+        # Обработка возможных ошибок базы данных или других исключений
+        print(f"Ошибка при получении уникальных дат заявок: {e}")
+        return jsonify({"message": "Внутренняя ошибка сервера"}), 500
+
+
 ## 5. PUT /api/admin/applications/<int:app_id>: Обновить статус заявки
 @admin_bp.route('/applications/<int:app_id>', methods=['PUT'])
 @master_required
