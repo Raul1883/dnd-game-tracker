@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // --- ФУНКЦИИ УПРАВЛЕНИЯ ЗАЯВКАМИ ---
 
-            // 1. ЗАГРУЗКА И ОТОБРАЖЕНИЕ СПИСКА (GET /api/admin/applications)
+                        // 1. ЗАГРУЗКА И ОТОБРАЖЕНИЕ СПИСКА (GET /api/admin/applications)
             const loadApplications = async () => {
                 showMessage(mainMessage, 'Загрузка списка заявок...', 'loading');
                 tableBody.innerHTML = '';
@@ -69,40 +69,41 @@ document.addEventListener('DOMContentLoaded', () => {
                         return;
                     }
 
+                    // Получаем имена задач для всех заявок
+                    const taskNames = {};
+                    for (const app of applications) {
+                        try {
+                            const taskData = await apiCall(`/api/tasks/${app.task_id}`);
+                            taskNames[app.task_id] = taskData.name || '-';
+                        } catch (e) {
+                            console.error(`Ошибка загрузки задачи ${app.task_id}:`, e);
+                            taskNames[app.task_id] = '-';
+                        }
+                    }
+
                     applications.forEach(app => {
                         const row = tableBody.insertRow();
                         row.dataset.appId = app.id;
 
-                        // Форматирование времени
                         const formatTime = (timeStr) => timeStr ? timeStr.substring(0, 5) : '-';
                         const formatDate = (dateStr) => new Date(dateStr).toLocaleDateString();
                         const formatDateTime = (dateTimeStr) => {
-    if (!dateTimeStr) {
-        return '-';
-    }
-
-    try {
-        // 1. Разделяем строку по 'T'
-        const parts = dateTimeStr.split('T');
-        if (parts.length < 2) {
-            return dateTimeStr.replace(/-/g, '.').substring(0, 10); // Возвращаем только дату, если нет времени
-        }
-
-        const datePart = parts[0]; // "2025-11-05"
-        const timePart = parts[1]; // "14:46:53.888455Z"
-
-        // 2. Форматируем дату: заменяем дефисы на точки
-        const formattedDate = datePart.replace(/-/g, '.'); // "2025.11.05"
-
-        // 3. Форматируем время: берем только часы и минуты (первые 5 символов)
-        const formattedTime = timePart.substring(0, 5); // "14:46"
-
-        return `${formattedDate} ${formattedTime}`; // "2025.11.05 14:46"
-    } catch (e) {
-        console.error("Ошибка форматирования даты-времени:", e);
-        return '-';
-    }
-};
+                            if (!dateTimeStr) return '-';
+                            try {
+                                const parts = dateTimeStr.split('T');
+                                if (parts.length < 2) {
+                                    return dateTimeStr.replace(/-/g, '.').substring(0, 10);
+                                }
+                                const datePart = parts[0];
+                                const timePart = parts[1];
+                                const formattedDate = datePart.replace(/-/g, '.');
+                                const formattedTime = timePart.substring(0, 5);
+                                return `${formattedDate} ${formattedTime}`;
+                            } catch (e) {
+                                console.error("Ошибка форматирования даты-времени:", e);
+                                return '-';
+                            }
+                        };
 
                         row.innerHTML = `
                             <td>${app.id}</td>
@@ -113,21 +114,21 @@ document.addEventListener('DOMContentLoaded', () => {
                                     <button class="delete-app-btn" data-app-id="${app.id}">Удалить</button>
                                 </div>
                             </td>
-                            <td>${app.task_id}</td>
+                            <td>${taskNames[app.task_id] || '-'}</td>
                             <td>${app.name}</td>
                             <td>${formatDate(app.game_date)}</td>
                             <td>${formatTime(app.time_start)}</td>
                             <td>${formatTime(app.time_end)}</td>
-                            <td title="${app.info || ''}">${(app.info && app.info.length > 50) ? app.info.substring(0, 47) + '...' : (app.info || '-')}</td>
+                            <td title="${app.info || ''}">
+                                ${(app.info && app.info.length > 50) ? app.info.substring(0, 47) + '...' : (app.info || '-')}
+                            </td>
                             <td>${formatDateTime(app.created_at)}</td>
                         `;
                     });
 
-                    // 2. Добавление обработчиков клика к кнопкам сохранения
                     document.querySelectorAll('.save-status-btn').forEach(btn => {
                         btn.addEventListener('click', handleSaveStatus);
                     });
-
                     document.querySelectorAll('.delete-app-btn').forEach(btn => {
                         btn.addEventListener('click', handleDeleteApplication);
                     });
@@ -137,6 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     showMessage(mainMessage, `Ошибка загрузки: ${error.message}`, 'error');
                 }
             };
+
 
             // --- ИСПРАВЛЕННАЯ ФУНКЦИЯ: ГЕНЕРИРУЕТ SELECT КАК HTML-СТРОКУ ---
             const createStatusSelectHTML = (appId, currentStatus) => {
