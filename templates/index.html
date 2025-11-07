@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Главная страница | Запись на НРИ</title>
     <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.css">
+
 </head>
 <body>
 
@@ -82,7 +84,9 @@
 
                         <div class="form-group">
                             <label for="game_date">Желаемая дата игры * (ГГГГ-ММ-ДД)</label>
-                            <input type="date" id="game_date" name="game_date" required>
+                            <p class="prim">Зеленым отмечены даты, когда хотя бы один игрок оставил отклик. <br>
+                                Синим отмечены даты, когда хотя бы один мастер свободен.</p>
+                            <input type="text" id="game_date" name="game_date" required placeholder="Выберите дату">
                         </div>
 
                         <div class="form-group">
@@ -116,6 +120,9 @@
             </ul>
         </div>
     </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/l10n/ru.min.js"></script>
 
     <script src="/static/scripts/index.js"></script>
 </body>

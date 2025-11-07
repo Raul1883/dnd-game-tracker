@@ -380,6 +380,12 @@ p, ul {
     margin-bottom: 15px;
 }
 
+.prim{
+text-size: 12px;
+
+font-style: italic;
+}
+
 .form-group label {
     display: block;
     font-weight: bold;
@@ -446,7 +452,26 @@ footer {
 
 
 
-
+/* Голубой: Свободные окна (openSlots) */
+.highlight-blue {
+    background: #c3e6cb !important; /* Светло-зеленый (Отклики игроков) */
+    background: #cfe2ff !important;
+    border-color: #9ec5fe !important;
+    color: #052c65 !important;
+}
+/* Светло-зеленый: Есть заявки (applicationDates) */
+.highlight-light-green {
+    background: #d4edda !important;
+    border-color: #c3e6cb !important;
+    color: #155724 !important;
+}
+/* Темно-зеленый: Лучшие даты (Окна И Отклики) */
+.highlight-dark-green {
+    background: #28a745 !important;
+    border-color: #218838 !important;
+    color: white !important;
+    font-weight: bold;
+}
 
 .footer-info-e {
     color: #347C98;
